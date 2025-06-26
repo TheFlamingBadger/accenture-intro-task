@@ -120,7 +120,6 @@ def plotcountry(lat, lon, name):
         name (str): Name of the country.
     """
     plt.plot(lon, lat, 'ro')  # Plot the country as a red dot
-
     
 
 # Find the country with the longest name
