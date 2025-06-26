@@ -1,3 +1,6 @@
+
+api_url_1 = "https://restcountries.com/v3.1/all"
+
 # ./countrytool top-population [n] — show top n countries by population
 def getByDescPopulation(n):
     return
@@ -17,3 +20,4 @@ def getByLongestName():
 # ./countrytool average-population — calculate the average population across all countries
 def getAveragePopulation():
     return
+
