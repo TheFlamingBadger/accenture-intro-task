@@ -9,8 +9,7 @@ api_url_1 = "https://restcountries.com/v3.1/all"
 api_url_2 = "https://api.open-meteo.com/v1/forecast"
 
 
-# ./countrytool top-population [n] — show top n countries by population
-#JUSTINE
+# Show top n countries by population
 def getByDescPopulation(n):
     search_url = f"{api_url_1}?fields=name,population"
     response = requests.get(search_url)
@@ -32,8 +31,8 @@ def getByDescPopulation(n):
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
-# ./countrytool language [lang] — show countries that speak a given language
-#JUSTINE
+
+# Show countries that speak a given language
 def getByLanguage(lang):
     
     
@@ -65,8 +64,8 @@ def getByLanguage(lang):
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
-# ./countrytool southern — list countries in the Southern Hemisphere
-#QUENTON
+
+# List countries in the Southern Hemisphere
 def getByHemisphere(hemisphere: str):
     """Retrieves all countries and lists those in the specified hemisphere (Northern or Southern).
 
@@ -122,8 +121,8 @@ def plotcountry(lat, lon, name):
     plt.plot(lon, lat, 'ro')  # Plot the country as a red dot
 
     
-# ./countrytool longest-name — find the country with the longest name
-#QUENTON
+
+# Find the country with the longest name
 def getByLongestName():
     """Retrieves all countries and finds the one with the longest name.
     
@@ -147,8 +146,8 @@ def getByLongestName():
         print(longestCountry)
     return
 
-# ./countrytool average-population — calculate the average population across all countries
-#QUENTON
+
+# Calculate the average population across all countries
 def getAveragePopulation():
     """ Retrieves all countries and calculates the average population.
     """
@@ -168,7 +167,8 @@ def getAveragePopulation():
     
     return
 
-# `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+
+# Show current temperature of location accessed via latitude/longitude
 def getCurrTemp(lat, lon):
     params = {
         "latitude": lat,
@@ -185,7 +185,8 @@ def getCurrTemp(lat, lon):
     
     return
 
-# `./countrytool precipitation [lat] [lon]` - show current precipitation of location accessed via latitude/longitude
+
+# Show current precipitation of location accessed via latitude/longitude
 def getCurrPrecip(lat, lon):
     params = {
         "latitude": lat,
@@ -214,8 +215,8 @@ def getCurrPrecip(lat, lon):
 
     return
 
-# `./countrytool save --format json|csv --output countries.json` — save all countries to a file
-#JUSTINE + QUENTON
+
+# Save all countries to a file
 def getAllCountries(format, path):
     filePath = f"{path}.{format}"
     search_url = f"{api_url_1}?fields=name"
@@ -244,16 +245,3 @@ def getAllCountries(format, path):
     else:
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
-
-
-if __name__ == "__main__":
-    # Example usage
-    # n = 5  # Change this to the number of top countries you want to see
-    # # lang = "Hindi"
-    format= "csv"
-    # getByDescPopulation(n)
-    # getByLanguage(lang)
-    # getByHemisphere("Northern")
-    # getByLongestName()
-    # getAveragePopulation()
-    getAllCountries(format)
