@@ -1,9 +1,11 @@
 import requests
+from datetime import datetime, timezone
 import json
 import csv
 
 
 api_url_1 = "https://restcountries.com/v3.1/all"
+api_url_2 = "https://api.open-meteo.com/v1/forecast"
 
 
 # ./countrytool top-population [n] — show top n countries by population
@@ -109,10 +111,48 @@ def getAveragePopulation():
 
 # `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
 def getCurrTemp(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current_weather": True
+    }
+    response = requests.get(api_url_2, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        current_weather = data.get("current_weather", {})
+        temperature = current_weather.get("temperature")
+        print(f"Current temperature at {lat}, {lon}: {temperature}°C")
+    
     return
 
-# `./countrytool precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+# `./countrytool precipitation [lat] [lon]` - show current precipitation of location accessed via latitude/longitude
 def getCurrPrecip(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": "precipitation",
+        "current_weather": True,
+    }
+
+    response = requests.get(api_url_2, params=params)
+
+    data = response.json()
+
+    # Get current time rounded down to the hour 
+    now_utc = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+    now_str = now_utc.strftime("%Y-%m-%dT%H:%M")
+
+    times = data.get("hourly", {}).get("time", [])
+    precipitation_values = data.get("hourly", {}).get("precipitation", [])
+
+
+    # Find index of current hour 
+    idx = times.index(now_str)
+    precip = precipitation_values[idx]
+
+    print(f"Current precipitation at {lat}, {lon}: {precip} mm")
+
     return
 
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
