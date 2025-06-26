@@ -187,8 +187,10 @@ def getCurrPrecip(lat, lon):
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
 #JUSTINE + QUENTON
 def getAllCountries(format, path):
+    filePath = f"{path}.{format}"
     search_url = f"{api_url_1}?fields=name"
     response = requests.get(search_url)
+    
     if response.status_code == 200:
         countries = response.json()
 
@@ -198,15 +200,15 @@ def getAllCountries(format, path):
         country_names.sort()
 
         if format == "json":
-            with open('countries.json', 'w') as json_file:
+            with open(filePath, 'w') as json_file:
                 json.dump(country_names, json_file, indent=4)
             print("Countries saved to countries.json")
         elif format == "csv":
-            with open('countries.csv', 'w', newline='') as csv_file:
+            with open(filePath, 'w', newline='') as csv_file:
                 writer = csv.writer(csv_file)
                 for country in country_names:
                     writer.writerow([country])
-            print("Countries saved to countries.csv")
+            print(f"Countries saved to {filePath}")
         else:
             print("Invalid format specified. Use 'json' or 'csv'.")
     else:
