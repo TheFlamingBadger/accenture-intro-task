@@ -1,5 +1,22 @@
-# ./countrytool save --format json|csv --output countries.json — save all countries to a file
-# ./countrytool help — show help text
+from constants import helpString, emptyInputString, unknownCmdString
+
+
+def parseInput(str):
+    words = str.split()
+    
+    if (len(words) < 1):
+        print(emptyInputString)
+    elif (words[0] == "help"):
+        print(helpString)
+    else:
+        print(unknownCmdString)
+
 
 def main():
-    return 0
+    while(True):
+        userInput = input()
+        parseInput(userInput)
+
+
+if __name__ == "__main__":
+    main()
