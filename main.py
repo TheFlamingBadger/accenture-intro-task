@@ -36,7 +36,7 @@ def parseInput(str):
             getByHemisphere(args[1])
 
     elif (cmd == "avg-population"):
-        getAveragePopulation(args[1])
+        getAveragePopulation()
 
     elif (cmd == "temperature"):
         if (len(args) < 3):
