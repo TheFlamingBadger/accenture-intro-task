@@ -168,54 +168,6 @@ def getAveragePopulation():
     
     return
 
-
-# Show current temperature of location accessed via latitude/longitude
-def getCurrTemp(lat, lon):
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "current_weather": True
-    }
-    response = requests.get(api_url_2, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-        current_weather = data.get("current_weather", {})
-        temperature = current_weather.get("temperature")
-        print(f"Current temperature at {lat}, {lon}: {temperature}°C")
-    
-    return
-
-
-# Show current precipitation of location accessed via latitude/longitude
-def getCurrPrecip(lat, lon):
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "hourly": "precipitation",
-        "current_weather": True,
-    }
-
-    response = requests.get(api_url_2, params=params)
-
-    data = response.json()
-
-    # Get current time rounded down to the hour 
-    now_utc = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
-    now_str = now_utc.strftime("%Y-%m-%dT%H:%M")
-
-    times = data.get("hourly", {}).get("time", [])
-    precipitation_values = data.get("hourly", {}).get("precipitation", [])
-
-
-    # Find index of current hour 
-    idx = times.index(now_str)
-    precip = precipitation_values[idx]
-
-    print(f"Current precipitation at {lat}, {lon}: {precip} mm")
-
-    return
-
 def haversine(lat1, lon1, lat2, lon2):
     # returns distance in kilometers
     R = 6371.0
@@ -254,7 +206,54 @@ def get_closest_country(lat, lon):
     return best, best_dist
 
 
-# Save all countries to a file
+# Show current temperature of location accessed via latitude/longitude
+def getCurrTemp(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current_weather": True
+    }
+    response = requests.get(api_url_2, params=params)
+    
+    country, country_dist = get_closest_country(lat, lon)
+
+    if response.status_code == 200:
+        data = response.json()
+        current_weather = data.get("current_weather", {})
+        temperature = current_weather.get("temperature")
+        print(f"Current temperature in {country} ({lat}, {lon}): {temperature}°C")
+    
+    return
+
+# Show current precipitation of location accessed via latitude/longitude
+def getCurrPrecip(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": "precipitation",
+        "current_weather": True,
+    }
+
+    response = requests.get(api_url_2, params=params)
+
+    data = response.json()
+
+    # Get current time rounded down to the hour 
+    now_utc = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+    now_str = now_utc.strftime("%Y-%m-%dT%H:%M")
+
+    times = data.get("hourly", {}).get("time", [])
+    precipitation_values = data.get("hourly", {}).get("precipitation", [])
+
+    country, country_dist = get_closest_country(lat, lon)
+
+    # Find index of current hour 
+    idx = times.index(now_str)
+    precip = precipitation_values[idx]
+
+    print(f"Current precipitation in {country} ({lat}, {lon}): {precip} mm")
+
+    return
 
 # Save all countries to a file
 def getAllCountries(format, path):
