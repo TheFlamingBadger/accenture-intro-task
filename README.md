@@ -5,9 +5,9 @@
 The following commands are implemented in the main command line program `main.py`:
 
 1. `help` — list commands
-2. `top-population [n]` — show top n countries by population
-3. `language [lang]` — show countries that speak a given language
-4. `save --format json|csv --output countries.json` — save all countries to a file
+2. `top-population [num countries]` — show top n countries by population
+3. `language [language]` — show countries that speak a given language
+4. `save --format [json|csv] --path [path]` — save all countries to a file
 5. `hemisphere [southern|northern]` — list countries in the Southern Hemisphere
 6. `longest-name` — list country with the longest name
 7. `avg-population` — show avg population of all countries

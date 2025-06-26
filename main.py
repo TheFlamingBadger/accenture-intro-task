@@ -59,7 +59,7 @@ def parseInput(str):
                 if (args[i] == "--format"):
                     if (i+1 <= len(args) and args[i+1] == "csv"):
                         fileType = "csv"
-                elif (args[i] == "--output"):
+                elif (args[i] == "--path"):
                     if (i+1 <= len(args)):
                         path = args[i+1]
 
