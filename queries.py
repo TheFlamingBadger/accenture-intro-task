@@ -1,5 +1,5 @@
 import requests
-
+import constants
 
 api_url_1 = "https://restcountries.com/v3.1/all"
 
@@ -35,14 +35,40 @@ def getByLanguage(lang):
     return
 
 # ./countrytool southern — list countries in the Southern Hemisphere
-#JUSTINE
-def getByHemisphere(hemisphere):
-    return
+#QUENTON
+def getByHemisphere(hemisphere: str):
+    """Retrieves all countries and lists those in the specified hemisphere (Northern or Southern).
 
+    Args:
+        hemisphere (str): _description_
+    """
+    hemisphere = hemisphere.lower()
+    if hemisphere not in constants.hemishperes:
+        print("Please specify either 'northern' or 'southern' hemisphere.")
+        return
+    
+    qry = f"{api_url_1}?fields=name,latlng"
+    response = requests.get(qry)
+    print(f"Countries in the {hemisphere} Hemisphere:")
+    if response.status_code == 200:
+        countries = response.json()
+        for country in countries:
+            latlng = country['latlng']
+            if hemisphere == "southern" and latlng[0] < 0:
+                print(country['name']['common'])
+            elif hemisphere == "northern" and latlng[0] > 0:
+                print(country['name']['common'])
+    
+    return 
+    
 # ./countrytool longest-name — find the country with the longest name
 #QUENTON
 def getByLongestName():
-    qry = api_url_1 + "?fields=name"
+    """Retrieves all countries and finds the one with the longest name.
+    
+    """
+
+    qry = f"{api_url_1}?fields=name"
     response = requests.get(qry)
     print("Country with the longest name:")
     if response.status_code == 200:
@@ -50,6 +76,7 @@ def getByLongestName():
         max = 0
         longestCountry = ""
         
+        # Iterate through the countries to find the longest name
         for country in countries:
             name_length = len(country['name']['common'])
             if name_length > max:
@@ -57,13 +84,14 @@ def getByLongestName():
                 longestCountry = country['name']['common']
         
         print(longestCountry)
-    
     return
 
 # ./countrytool average-population — calculate the average population across all countries
 #QUENTON
 def getAveragePopulation():
-    qry = api_url_1 + "?fields=name,population"
+    """ Retrieves all countries and calculates the average population.
+    """
+    qry = f"{api_url_1}?fields=name,population"
     response = requests.get(qry)
     
     print("Average population across all countries:")
@@ -95,8 +123,8 @@ def getAllCountries():
 if __name__ == "__main__":
     # Example usage
     n = 5  # Change this to the number of top countries you want to see
-    getByDescPopulation(n)
+    # getByDescPopulation(n)
     # getByLanguage("English")
-    # getByHemisphere("Southern")
+    # getByHemisphere("Northern")
     # getByLongestName()
     # getAveragePopulation()
