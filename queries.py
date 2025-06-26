@@ -3,7 +3,7 @@ import constants
 from datetime import datetime, timezone
 import json
 import csv
-
+import matplotlib.pyplot as plt
 
 api_url_1 = "https://restcountries.com/v3.1/all"
 api_url_2 = "https://api.open-meteo.com/v1/forecast"
@@ -81,16 +81,46 @@ def getByHemisphere(hemisphere: str):
     qry = f"{api_url_1}?fields=name,latlng"
     response = requests.get(qry)
     print(f"Countries in the {hemisphere} Hemisphere:")
+    
+    initPlot()  # Initialize the plot for latitude and longitude
+    
     if response.status_code == 200:
         countries = response.json()
         for country in countries:
             latlng = country['latlng']
             if hemisphere == "southern" and latlng[0] < 0:
+                plotcountry(latlng[0], latlng[1], country['name']['common'])  # Plot the country
                 print(country['name']['common'])
             elif hemisphere == "northern" and latlng[0] > 0:
+                plotcountry(latlng[0], latlng[1], country['name']['common'])  # Plot the country
                 print(country['name']['common'])
+                
+        plt.show()
     
     return 
+
+def initPlot():
+    """Initializes the plot for latitude and longitude."""
+    
+    plt.figure(figsize=(12, 8))
+    plt.imshow(plt.imread('map.jpg'), extent=[-180, 180, -90, 90], aspect='auto')  # Load a world map image
+    plt.title('Countries by Latitude and Longitude')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.xlim(-180, 180)
+    plt.ylim(-90, 90)
+    plt.grid(True)
+
+def plotcountry(lat, lon, name):
+    """Plots a country on the map based on its latitude and longitude.
+
+    Args:
+        lat (float): Latitude of the country.
+        lon (float): Longitude of the country.
+        name (str): Name of the country.
+    """
+    plt.plot(lon, lat, 'ro')  # Plot the country as a red dot
+
     
 # ./countrytool longest-name — find the country with the longest name
 #QUENTON
