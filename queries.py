@@ -1,7 +1,12 @@
 import requests
-import constants
+import constants 
+from datetime import datetime, timezone
+import json
+import csv
+
 
 api_url_1 = "https://restcountries.com/v3.1/all"
+api_url_2 = "https://api.open-meteo.com/v1/forecast"
 
 
 # ./countrytool top-population [n] — show top n countries by population
@@ -32,6 +37,32 @@ def getByDescPopulation(n):
 def getByLanguage(lang):
     
     
+    search_url = f"{api_url_1}?fields=name,languages"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        countries = response.json()
+
+        filtered_countries = []
+        for country in countries:
+            if lang in country['languages'].values():
+                filtered_countries.append(country['name']['common'])
+
+        filtered_countries.sort()
+        
+        print(f"Countries that speak {lang}:")
+        
+        length = len(filtered_countries)
+        index = 0
+        for country in filtered_countries:
+            print(f"{country}", end="")
+            if (index < length - 1):
+                print(", ", end="")
+            else:
+                print("")
+            index += 1
+
+    else:
+        print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
 # ./countrytool southern — list countries in the Southern Hemisphere
@@ -109,22 +140,88 @@ def getAveragePopulation():
 
 # `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
 def getCurrTemp(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current_weather": True
+    }
+    response = requests.get(api_url_2, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        current_weather = data.get("current_weather", {})
+        temperature = current_weather.get("temperature")
+        print(f"Current temperature at {lat}, {lon}: {temperature}°C")
+    
     return
 
-# `./countrytool precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+# `./countrytool precipitation [lat] [lon]` - show current precipitation of location accessed via latitude/longitude
 def getCurrPrecip(lat, lon):
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": "precipitation",
+        "current_weather": True,
+    }
+
+    response = requests.get(api_url_2, params=params)
+
+    data = response.json()
+
+    # Get current time rounded down to the hour 
+    now_utc = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+    now_str = now_utc.strftime("%Y-%m-%dT%H:%M")
+
+    times = data.get("hourly", {}).get("time", [])
+    precipitation_values = data.get("hourly", {}).get("precipitation", [])
+
+
+    # Find index of current hour 
+    idx = times.index(now_str)
+    precip = precipitation_values[idx]
+
+    print(f"Current precipitation at {lat}, {lon}: {precip} mm")
+
     return
 
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
-def getAllCountries():
+#JUSTINE + QUENTON
+def getAllCountries(format, path):
+    search_url = f"{api_url_1}?fields=name"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        countries = response.json()
+
+        country_names = []
+        for country in countries:
+            country_names.append(country['name']['common'])
+        country_names.sort()
+
+        if format == "json":
+            with open('countries.json', 'w') as json_file:
+                json.dump(country_names, json_file, indent=4)
+            print("Countries saved to countries.json")
+        elif format == "csv":
+            with open('countries.csv', 'w', newline='') as csv_file:
+                writer = csv.writer(csv_file)
+                for country in country_names:
+                    writer.writerow([country])
+            print("Countries saved to countries.csv")
+        else:
+            print("Invalid format specified. Use 'json' or 'csv'.")
+    else:
+        print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
 
 if __name__ == "__main__":
     # Example usage
-    n = 5  # Change this to the number of top countries you want to see
+    # n = 5  # Change this to the number of top countries you want to see
+    # # lang = "Hindi"
+    format= "csv"
     # getByDescPopulation(n)
-    # getByLanguage("English")
+    # getByLanguage(lang)
     # getByHemisphere("Northern")
     # getByLongestName()
     # getAveragePopulation()
+    getAllCountries(format)

@@ -14,3 +14,5 @@ Available Commands:
 """
 
 hemishperes = ["northern", "southern"]
+defaultType = "json"
+defaultPath = "countries"
