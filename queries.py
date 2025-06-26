@@ -30,6 +30,8 @@ def getByDescPopulation(n):
 # ./countrytool language [lang] — show countries that speak a given language
 #JUSTINE
 def getByLanguage(lang):
+    
+    
     return
 
 # ./countrytool southern — list countries in the Southern Hemisphere
@@ -40,11 +42,41 @@ def getByHemisphere(hemisphere):
 # ./countrytool longest-name — find the country with the longest name
 #QUENTON
 def getByLongestName():
+    qry = api_url_1 + "?fields=name"
+    response = requests.get(qry)
+    print("Country with the longest name:")
+    if response.status_code == 200:
+        countries = response.json()
+        max = 0
+        longestCountry = ""
+        
+        for country in countries:
+            name_length = len(country['name']['common'])
+            if name_length > max:
+                max = name_length
+                longestCountry = country['name']['common']
+        
+        print(longestCountry)
+    
     return
 
 # ./countrytool average-population — calculate the average population across all countries
 #QUENTON
 def getAveragePopulation():
+    qry = api_url_1 + "?fields=name,population"
+    response = requests.get(qry)
+    
+    print("Average population across all countries:")
+    if response.status_code == 200:
+        countries = response.json()
+        total_population = 0
+        
+        for country in countries:
+            total_population += country['population']        
+        
+        average_population = total_population / len(countries)
+        print(average_population)
+    
     return
 
 # `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
