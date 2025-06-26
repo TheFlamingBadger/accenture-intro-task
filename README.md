@@ -7,7 +7,7 @@
 - List the 10 countries with the highest population.
 - Find the countries in the Southern Hemisphere (lat/lng).
 - Find the country with the longest name.
-- List all countries that speak Spanish.
+- List all countries that speak Spanish (or lang specified in CLI).
 - Calculate the average population across all countries.
 
 <br>
@@ -30,3 +30,11 @@
 - `./countrytool save --format json|csv --output countries.json` — save all countries to a file
 - `./countrytool southern` — list countries in the Southern Hemisphere
 - `./countrytool help` — show help text
+
+- `./countrytool longest-name` — list country with the longest name
+
+- `./countrytool avg-population` — show avg population of all countries
+
+- `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+
+- `./countrytool precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
