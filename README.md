@@ -14,4 +14,4 @@ The following commands are implemented in the main command line program `main.py
 8. `temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
 9. `precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
 
-Data from [r]estcountries]((https://restcountries.com/)) and [open-meteo](https://api.open-meteo.com/) APIs.
+Data from [restcountries](https://restcountries.com/) and [open-meteo](https://api.open-meteo.com/) APIs.
