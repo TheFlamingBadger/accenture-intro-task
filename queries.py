@@ -1,4 +1,6 @@
 import requests
+import json
+import csv
 
 
 api_url_1 = "https://restcountries.com/v3.1/all"
@@ -115,7 +117,31 @@ def getCurrPrecip(lat, lon):
 
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
 #JUSTINE + QUENTON
-def getAllCountries():
+def getAllCountries(format):
+    search_url = f"{api_url_1}?fields=name"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        countries = response.json()
+
+        country_names = []
+        for country in countries:
+            country_names.append(country['name']['common'])
+        country_names.sort()
+
+        if format == "json":
+            with open('countries.json', 'w') as json_file:
+                json.dump(country_names, json_file, indent=4)
+            print("Countries saved to countries.json")
+        elif format == "csv":
+            with open('countries.csv', 'w', newline='') as csv_file:
+                writer = csv.writer(csv_file)
+                for country in country_names:
+                    writer.writerow([country])
+            print("Countries saved to countries.csv")
+        else:
+            print("Invalid format specified. Use 'json' or 'csv'.")
+    else:
+        print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
 
@@ -123,9 +149,10 @@ if __name__ == "__main__":
     # Example usage
     # n = 5  # Change this to the number of top countries you want to see
     # lang = "Hindi"
+    format= "csv"
     # getByDescPopulation(n)
     # getByLanguage(lang)
     # getByHemisphere("Southern")
     # getByLongestName()
     # getAveragePopulation()
-    # getAllCountries()
+    getAllCountries(format)
