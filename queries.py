@@ -11,17 +11,18 @@ def getByDescPopulation(n):
     response = requests.get(search_url)
     if response.status_code == 200:
         countries = response.json()
-        print("Countries")
-        print(countries)
 
         sorted_countries = sorted(countries, key=lambda x: x['population'], reverse=True)
-        print("Sorted Countries")
-        print(sorted_countries)
     
         top_countries = sorted_countries[:n]
-        print("Top Countries")
-        print(top_countries)
-        
+
+        rank_index = 1
+        for country in top_countries:
+            name = country['name']['common']
+            population = country['population']
+            population_str = f"{population:,}"  # Format population with commas
+            print(f"{rank_index} - {name:>20}: {population_str:>20}")
+            rank_index += 1 
     else:
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
