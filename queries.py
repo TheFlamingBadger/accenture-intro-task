@@ -9,3 +9,11 @@ def getByLanguage(lang):
 # ./countrytool southern — list countries in the Southern Hemisphere
 def getByHemisphere(hemisphere):
     return
+
+# ./countrytool longest-name — find the country with the longest name
+def getByLongestName():
+    return
+
+# ./countrytool average-population — calculate the average population across all countries
+def getAveragePopulation():
+    return
