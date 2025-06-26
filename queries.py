@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import json
 import csv
 import matplotlib.pyplot as plt
+import math
 
 api_url_1 = "https://restcountries.com/v3.1/all"
 api_url_2 = "https://api.open-meteo.com/v1/forecast"
@@ -215,8 +216,50 @@ def getCurrPrecip(lat, lon):
 
     return
 
+<<<<<<< HEAD
+def haversine(lat1, lon1, lat2, lon2):
+    # returns distance in kilometers
+    R = 6371.0
+    lat1_rad, lat2_rad = math.radians(lat1), math.radians(lat2)
+    lon1_rad, lon2_rad = math.radians(lon1), math.radians(lon2)
+    
+    diff_lat = lat2_rad - lat1_rad
+    diff_lon = lon2_rad - lon1_rad
+    
+    a = math.sin(diff_lat/2)**2 + math.cos(lat1_rad)*math.cos(lat2_rad)*math.sin(diff_lon/2)**2
+    return R * 2 * math.asin(math.sqrt(a))
+
+def get_closest_country(lat, lon):
+    """Finds the closest country to the given latitude and longitude.
+
+    Args:
+        lat (float): latitude of the location in degrees.
+        lon (float): longitude of the location in degrees.
+
+    Returns:
+        tuple(str, float): tuple of the closest country's name and the distance to it in kilometers.
+    """
+    resp = requests.get(f"{api_url_1}?fields=name,latlng")
+    if resp.status_code == 200:
+        resp.raise_for_status()
+        best = None
+        best_dist = float("inf")
+        for c in resp.json():
+            if 'latlng' not in c or len(c['latlng']) != 2:
+                continue
+            clat, clon = c['latlng']
+            d = haversine(lat, lon, clat, clon)
+            if d < best_dist:
+                best_dist = d
+                best = c['name']['common']
+    return best, best_dist
+
 
 # Save all countries to a file
+=======
+
+# Save all countries to a file
+>>>>>>> 7b5d56bdece9e466cade1ddf1d6db725940a367f
 def getAllCountries(format, path):
     filePath = f"{path}.{format}"
     search_url = f"{api_url_1}?fields=name"
@@ -245,3 +288,20 @@ def getAllCountries(format, path):
     else:
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
+<<<<<<< HEAD
+
+
+if __name__ == "__main__":
+    # Example usage
+    # n = 5  # Change this to the number of top countries you want to see
+    # # lang = "Hindi"
+    format= "csv"
+    # getByDescPopulation(n)
+    # getByLanguage(lang)
+    # getByHemisphere("Northern")
+    # getByLongestName()
+    # getAveragePopulation()
+    # getAllCountries(format)
+    print(get_closest_country(26, -78))  # Example coordinates for London
+=======
+>>>>>>> 7b5d56bdece9e466cade1ddf1d6db725940a367f
