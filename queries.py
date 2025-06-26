@@ -32,6 +32,32 @@ def getByDescPopulation(n):
 def getByLanguage(lang):
     
     
+    search_url = f"{api_url_1}?fields=name,languages"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        countries = response.json()
+
+        filtered_countries = []
+        for country in countries:
+            if lang in country['languages'].values():
+                filtered_countries.append(country['name']['common'])
+
+        filtered_countries.sort()
+        
+        print(f"Countries that speak {lang}:")
+        
+        length = len(filtered_countries)
+        index = 0
+        for country in filtered_countries:
+            print(f"{country}", end="")
+            if (index < length - 1):
+                print(", ", end="")
+            else:
+                print("")
+            index += 1
+
+    else:
+        print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
 
 # ./countrytool southern — list countries in the Southern Hemisphere
@@ -88,15 +114,18 @@ def getCurrPrecip(lat, lon):
     return
 
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
+#JUSTINE + QUENTON
 def getAllCountries():
     return
 
 
 if __name__ == "__main__":
     # Example usage
-    n = 5  # Change this to the number of top countries you want to see
-    getByDescPopulation(n)
-    # getByLanguage("English")
+    # n = 5  # Change this to the number of top countries you want to see
+    # lang = "Hindi"
+    # getByDescPopulation(n)
+    # getByLanguage(lang)
     # getByHemisphere("Southern")
     # getByLongestName()
     # getAveragePopulation()
+    # getAllCountries()
