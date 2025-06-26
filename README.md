@@ -2,31 +2,31 @@
 
 ## Requirements
 
-1. 
-https://restcountries.com/
+1. Use [this API](https://restcountries.com/) to:
 
-Use this API to:
 - List the 10 countries with the highest population.
 - Find the countries in the Southern Hemisphere (lat/lng).
 - Find the country with the longest name.
 - List all countries that speak Spanish.
 - Calculate the average population across all countries.
 
-2.
-https://api.open-meteo.com/
+<br>
 
-Use this api to find the following information of a location:
+2. Use [this api](https://api.open-meteo.com/) to find the following information of a location:
+
 - Current temperature of location
 - Precipitation status of location
 
-3.
-Combine functionality from both APIs to return geo and weather information for searched location
+<br>
 
-4.
-Make a terminal CLI tool for these scripts. For example, make these commands possible (example with an entry script is called countrytool):
+3. Combine functionality from both APIs to return geo and weather information for searched location
 
-./countrytool top-population [n] — show top n countries by population
-./countrytool language [lang] — show countries that speak a given language
-./countrytool save --format json|csv --output countries.json — save all countries to a file
-./countrytool southern — list countries in the Southern Hemisphere
-./countrytool help — show help text
+<br>
+
+4. Make a terminal CLI tool for these scripts. For example, make these commands possible (example with an entry script is called countrytool):
+
+- `./countrytool top-population [n]` — show top n countries by population
+- `./countrytool language [lang]` — show countries that speak a given language
+- `./countrytool save --format json|csv --output countries.json` — save all countries to a file
+- `./countrytool southern` — list countries in the Southern Hemisphere
+- `./countrytool help` — show help text
