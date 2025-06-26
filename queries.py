@@ -117,7 +117,7 @@ def getCurrPrecip(lat, lon):
 
 # `./countrytool save --format json|csv --output countries.json` — save all countries to a file
 #JUSTINE + QUENTON
-def getAllCountries(format):
+def getAllCountries(format, path):
     search_url = f"{api_url_1}?fields=name"
     response = requests.get(search_url)
     if response.status_code == 200:

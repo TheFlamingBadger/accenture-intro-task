@@ -1,40 +1,17 @@
 # Accenture Intro Task
 
-## Requirements
+## Functionality
 
-1. Use [this API](https://restcountries.com/) to:
+The following commands are implemented in the main command line program `main.py`:
 
-- List the 10 countries with the highest population.
-- Find the countries in the Southern Hemisphere (lat/lng).
-- Find the country with the longest name.
-- List all countries that speak Spanish (or lang specified in CLI).
-- Calculate the average population across all countries.
+1. `help` — list commands
+2. `top-population [n]` — show top n countries by population
+3. `language [lang]` — show countries that speak a given language
+4. `save --format json|csv --output countries.json` — save all countries to a file
+5. `hemisphere [southern|northern]` — list countries in the Southern Hemisphere
+6. `longest-name` — list country with the longest name
+7. `avg-population` — show avg population of all countries
+8. `temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+9. `precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
 
-<br>
-
-2. Use [this api](https://api.open-meteo.com/) to find the following information of a location:
-
-- Current temperature of location
-- Precipitation status of location
-
-<br>
-
-3. Combine functionality from both APIs to return geo and weather information for searched location
-
-<br>
-
-4. Make a terminal CLI tool for these scripts. For example, make these commands possible (example with an entry script is called countrytool):
-
-- `./countrytool top-population [n]` — show top n countries by population
-- `./countrytool language [lang]` — show countries that speak a given language
-- `./countrytool save --format json|csv --output countries.json` — save all countries to a file
-- `./countrytool southern` — list countries in the Southern Hemisphere
-- `./countrytool help` — show help text
-
-- `./countrytool longest-name` — list country with the longest name
-
-- `./countrytool avg-population` — show avg population of all countries
-
-- `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
-
-- `./countrytool precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+Data from [r]estcountries]((https://restcountries.com/)) and [open-meteo](https://api.open-meteo.com/) APIs.

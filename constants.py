@@ -12,3 +12,6 @@ Available Commands:
 5. temperature [lat] [lon] - show current temperature at specified latitude/longitude
 6. precipitation [lat] [lon] - show current temperature at specified latitude/longitude
 """
+
+defaultType = "json"
+defaultPath = "countries"
