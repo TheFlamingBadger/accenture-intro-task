@@ -216,7 +216,6 @@ def getCurrPrecip(lat, lon):
 
     return
 
-<<<<<<< HEAD
 def haversine(lat1, lon1, lat2, lon2):
     # returns distance in kilometers
     R = 6371.0
@@ -256,10 +255,8 @@ def get_closest_country(lat, lon):
 
 
 # Save all countries to a file
-=======
 
 # Save all countries to a file
->>>>>>> 7b5d56bdece9e466cade1ddf1d6db725940a367f
 def getAllCountries(format, path):
     filePath = f"{path}.{format}"
     search_url = f"{api_url_1}?fields=name"
@@ -288,8 +285,6 @@ def getAllCountries(format, path):
     else:
         print(f"Error: Unable to fetch data, status code {response.status_code}")   
     return
-<<<<<<< HEAD
-
 
 if __name__ == "__main__":
     # Example usage
@@ -303,5 +298,3 @@ if __name__ == "__main__":
     # getAveragePopulation()
     # getAllCountries(format)
     print(get_closest_country(26, -78))  # Example coordinates for London
-=======
->>>>>>> 7b5d56bdece9e466cade1ddf1d6db725940a367f
