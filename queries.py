@@ -46,6 +46,18 @@ def getByLongestName():
 def getAveragePopulation():
     return
 
+# `./countrytool temperature [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+def getCurrTemp(lat, lon):
+    return
+
+# `./countrytool precipitation [lat] [lon]` - show current temperature of location accessed via latitude/longitude
+def getCurrPrecip(lat, lon):
+    return
+
+# `./countrytool save --format json|csv --output countries.json` — save all countries to a file
+def getAllCountries():
+    return
+
 
 if __name__ == "__main__":
     # Example usage
