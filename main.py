@@ -18,7 +18,7 @@ def parseInput(str):
         if (len(args) < 2):
             print("Missing argument: [number of countries]")
         else:
-            getByDescPopulation(args[1])
+            getByDescPopulation(int(args[1]))
 
     elif (cmd == "language"):
         if (len(args) < 2):
@@ -42,13 +42,13 @@ def parseInput(str):
         if (len(args) < 3):
             print("Missing arguments: [lat] [long]")
         else:
-            getCurrTemp(args[1], args[2])
+            getCurrTemp(float(args[1]), float(args[2]))
 
     elif (cmd == "precipitation"):
         if (len(args) < 3):
             print("Missing arguments: [lat] [long]")
         else:
-            getCurrPrecip(args[1], args[2])
+            getCurrPrecip(float(args[1]), float(args[2]))
     
     elif (cmd == "save"):
         fileType = defaultType
