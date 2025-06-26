@@ -50,10 +50,19 @@ def parseInput(str):
         else:
             getCurrPrecip(args[1], args[2])
     
-    # save --format json|csv --output countries.json
     elif (cmd == "save"):
         fileType = defaultType
         path = defaultPath
+
+        if (len(args) > 2):
+            for i in range(1,len(args)):
+                if (args[i] == "--format"):
+                    if (i+1 <= len(args) and args[i+1] == "csv"):
+                        fileType = "csv"
+                elif (args[i] == "--output"):
+                    if (i+1 <= len(args)):
+                        path = args[i+1]
+
         getAllCountries(fileType, path)
 
     else:
